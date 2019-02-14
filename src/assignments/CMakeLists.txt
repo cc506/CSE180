@@ -4,11 +4,15 @@ project(assignments)
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
 
+set(CMAKE_CXX_COMPILER "clang++")
+set(CMAKE_C_COMPILER "clang")
+
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   roscpp
+  geometry_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -195,3 +199,9 @@ include_directories(
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+
+add_executable(moverobot src/moverobot.cpp)
+add_executable(drift src/drift.cpp)
+
+target_link_libraries(moverobot ${catkin_LIBRARIES})
+target_link_libraries(drift ${catkin_LIBRARIES})
