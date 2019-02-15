@@ -13,6 +13,7 @@ set(CMAKE_C_COMPILER "clang")
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   geometry_msgs
+  nav_msgs
 )
 
 ## System dependencies are found with CMake's conventions

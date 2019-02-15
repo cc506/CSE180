@@ -10,28 +10,23 @@ int main(int argc, char **argv){
     ros::Publisher pubMove = nh.advertise<geometry_msgs::Twist>("/pioneer/cmd_vel",1000);
     ros::Publisher pubRotate = nh.advertise<geometry_msgs::Twist>("/pioneer/cmd_vel",1000);
 
-    ros::Rate rate(8);
-    geometry_msgs::Twist twistSquare;
+    ros::Rate rate(5);
+
+    geometry_msgs::Twist twistMove;
+	geometry_msgs::Twist twistRotate;
    
 while (ros::ok()) {
     int count = 0;
 
-	while(count < 4){
+	twistMove.linear.x = 1.0;
+	twistMove.angular.z = 0;
+	pubMove.publish(twistMove);
+	ros::Duration(1).sleep();
 
-		twistSquare.linear.x = 1.0;
-		twistSquare.angular.z = 0 ;
-		count++;
-		pubMove.publish(twistSquare);
-		rate.sleep();
-	}
-	count = 0;
-	while(count < 3){
-        
-		twistSquare.linear.x = 0;
-		twistSquare.angular.z = 30.0 ;
-		pubRotate.publish(twistSquare);
-		count++;
-		rate.sleep();
-		}
+	twistRotate.linear.x = 0;
+	twistRotate.linear.z = M_PI/2;
+	pubRotate.publish(twistRotate);
+	ros::Duration(1).sleep();
+
 	}
 }
