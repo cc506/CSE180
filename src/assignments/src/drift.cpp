@@ -26,8 +26,12 @@ int main(int argc, char* argv[]){
 
     ros::Publisher pub = nh.advertise<geometry_msgs::Twist>("/posedrift",1000);
 
+    ros::Rate rate(1);
+
     geometry_msgs::Twist twistPub;
     while(ros::ok()){
+
+        ros::spinOnce();
 
         twistPub.linear.x = xx - xX;
         twistPub.linear.y = yy - yY;
@@ -36,7 +40,7 @@ int main(int argc, char* argv[]){
         ROS_INFO_STREAM("X: " << twistPub.linear.x);
         ROS_INFO_STREAM("Y: " << twistPub.linear.y);
 
-        ros::spinOnce();
+        rate.sleep();
     }
     return 0;
 } 
