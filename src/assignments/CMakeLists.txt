@@ -14,6 +14,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   geometry_msgs
   nav_msgs
+  tf
 )
 
 ## System dependencies are found with CMake's conventions
@@ -203,6 +204,8 @@ include_directories(
 
 add_executable(moverobot src/moverobot.cpp)
 add_executable(drift src/drift.cpp)
+add_executable(gotoposition src/gotoposition.cpp)
 
 target_link_libraries(moverobot ${catkin_LIBRARIES})
 target_link_libraries(drift ${catkin_LIBRARIES})
+target_link_libraries(gotoposition ${catkin_LIBRARIES})
