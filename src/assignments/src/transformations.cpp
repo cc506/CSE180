@@ -30,13 +30,17 @@ int main(int argc, char *argv[]){
     tf2_ros::TransformListener listener(buffer);
     geometry_msgs::TransformStamped transformStamped;
         geometry_msgs::TransformStamped transformOdom;
+     geometry_msgs::Twist msg;
+
+    ros::spinOnce();
+    ros::Rate rate(1);
+
     while (ros::ok()) {
-        ros::spinOnce();
 
         try{
-            transformStamped = buffer.lookupTransform("pioneer/base_link/front_sonar", "pioneer/base_link/back_sonar",
+            transformStamped = buffer.lookupTransform("base_link/front_sonar", "base_link/back_sonar",
                                ros::Time(0));
-            transformOdom = buffer.lookupTransform("pioneer/base_link/front_sonar", "pioneer/odom", ros::Time(0));
+            transformOdom = buffer.lookupTransform("base_link/front_sonar", "odom", ros::Time(0));
         }
         catch (tf2::TransformException &ex) {
             ROS_WARN("%s",ex.what());
@@ -45,13 +49,15 @@ int main(int argc, char *argv[]){
         }
         tf2::Quaternion q1(transformStamped.transform.rotation.x,transformStamped.transform.rotation.y, 
                                 transformStamped.transform.rotation.z, transformStamped.transform.rotation.w);
-        tf2::Quaternion q2(transformOdom.transform.rotation.x,transformOdom.transform.rotation.y, 
-                                transformOdom.transform.rotation.z, transformOdom.transform.rotation.w);
-        
-        double yaw2 = tf2::getYaw(q2);
-        double yaw1 = tf2::getYaw(q1);
 
-        
+        double yaw = tf2::getYaw(q1);
+
+        msg.linear.x = transformStamped.transform.translation.x;
+        msg.linear.y = transformStamped.transform.translation.y;
+        msg.linear.z = transformStamped.transform.translation.z;
+        msg.angular.z = yaw;
+        pub.publish(msg);
+        ROS_INFO_STREAM("Matrix " << msg);
         
         ROS_INFO_STREAM("Obtained transformation " << transformOdom);
     }
