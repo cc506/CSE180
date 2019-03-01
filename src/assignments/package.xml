@@ -51,7 +51,7 @@
   <buildtool_depend>catkin</buildtool_depend>
   <build_depend>roscpp</build_depend>
   <depend>ros_msgs</depend>
-  <depend>tf</depend>
+  <depend>tf2</depend>
   <build_export_depend>roscpp</build_export_depend>
   <exec_depend>roscpp</exec_depend>
 

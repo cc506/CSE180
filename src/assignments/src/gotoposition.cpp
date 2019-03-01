@@ -30,11 +30,11 @@ int main(int argc,char ** argv) {
 	geometry_msgs::Pose2D poser;
 	tf::Quaternion q;
     while(ros::ok()){
-    cin >> x;
-	cin >> y;
-	cin >> theta;
-	q.setRPY(0,0,theta);
-	pubDirection.publish(poser);
+    	cin >> x;
+		cin >> y;
+		cin >> theta;
+		q.setRPY(0,0,theta);
+		pubDirection.publish(poser);
     }
-    return 0;
+	return 0;
 }
