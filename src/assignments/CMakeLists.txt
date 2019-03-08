@@ -13,6 +13,7 @@ set(CMAKE_C_COMPILER "clang")
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   geometry_msgs
+  sensor_msgs
   nav_msgs
   tf2
   tf2_ros
@@ -207,8 +208,10 @@ add_executable(moverobot src/moverobot.cpp)
 add_executable(drift src/drift.cpp)
 add_executable(gotoposition src/gotoposition.cpp)
 add_executable(transformations src/transformations.cpp)
+add_executable(goto src/goto.cpp)
 
 target_link_libraries(moverobot ${catkin_LIBRARIES})
 target_link_libraries(drift ${catkin_LIBRARIES})
 target_link_libraries(gotoposition ${catkin_LIBRARIES})
 target_link_libraries(transformations ${catkin_LIBRARIES})
+target_link_libraries(goto ${catkin_LIBRARIES})
