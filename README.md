@@ -48,3 +48,9 @@ For both distributions, launch Husky Gazebo the same way:
 ```
 roslaunch husky_gazebo husky_playpen.launch
 ```
+
+## Testing
+To test in gazebo, enter the below input according to your node:
+```
+rosrun assignments <your-node>
+```

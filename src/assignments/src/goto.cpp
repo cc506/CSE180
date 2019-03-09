@@ -4,23 +4,14 @@
 #include <tf/transform_datatypes.h>
 #include <sensor_msgs/LaserScan.h>
 #include <geometry_msgs/Pose2D.h>
-#include <move_base_msgs/MoveBaseAction.h>
-#include <actionlib/client/simple_action_client.h>
-
-typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> goal;
+#include <cmath>
 
 //Robot Pose
 float robot_pose_x;								
 float robot_pose_y;								
 float quat_x, quat_y, quat_z, quat_w;
-float goal_x, goal_y;		
-double robot_orientation;	
-
-void gotolocation(const geometry_msgs::Pose2D&msg) 
-{	
-	goal_x = 5;
-    goal_y = 5;
-}
+float goal_x, goal_y;
+float theta;	
 
 void scanMessageReceived(const sensor_msgs::LaserScan &msg) 
 {   
@@ -30,10 +21,9 @@ void scanMessageReceived(const sensor_msgs::LaserScan &msg)
     for (int i = 0; i < msg.ranges.size(); i++){
         if(msg.ranges[i] < closest){
             closest = msg.ranges[i];
-            closeIndex = i;
         }
     }
-    ROS_INFO_STREAM("Closest Obstacle: " << closest);
+    closeIndex = closest;
 }
 
 //Odometry message Callback function
@@ -53,7 +43,7 @@ void poseMessageReceived(const nav_msgs::Odometry&msg) {
     double roll, pitch, yaw;
     m.getRPY(roll, pitch, yaw);
 
-	robot_orientation = tf::getYaw(q);			//Define robot_orientation angle between positive x-axis and target point
+	theta = yaw;
 
 }
 
@@ -62,26 +52,41 @@ int main(int argc, char *argv[]){
     ros::init(argc, argv, "goto");
     ros::NodeHandle nh;
 
-    ros::Subscriber sub = nh.subscribe("goalpose", 1000 , &gotolocation);
     ros::Subscriber subScan = nh.subscribe("/scan", 1000, &scanMessageReceived);
     ros::Subscriber subOdom = nh.subscribe("/odometry/filtered", 1000, &poseMessageReceived);
 
+	goal_x = 5.0;
+	goal_y = 5.0;
+
     ros::Publisher pub = nh.advertise<geometry_msgs::Twist>("husky_velocity_controller/cmd_vel", 1000);
 
-    goal ac("move_base", true);
-
     ros::Rate rate(10);
-
+	
+	geometry_msgs::Twist msg;
     while (ros::ok()) {
         ros::spinOnce();
 
-        if(robot_pose_x != goal_x && robot_pose_y != goal_y){
-            
-        }else{
+        double diff_x = goal_x - robot_pose_x;
+		double diff_y = goal_y - robot_pose_y;
+		double dot = quat_x*diff_x + quat_y*diff_y; 
+		double det = quat_x*diff_y - quat_y*diff_x;
+		double movetoZ = atan2(det, dot); 
 
-        }
+		ROS_INFO_STREAM("(x, y) " << robot_pose_x << " , " << robot_pose_y);
+		double distanceToGoal = sqrt(pow(diff_x,2)+pow(diff_y,2));
 
-
+		if(robot_pose_x != goal_x && robot_pose_y != goal_y){
+			msg.linear.x = 0.2;
+			msg.angular.z = 0.0;
+		}
+		else 
+		{
+			ROS_INFO_STREAM("\n\nGOAL REACHED!!\n\n");
+ 			msg.linear.x = 0;
+			msg.angular.z = 0;
+		}
+        pub.publish(msg);
+		rate.sleep();
 
     }
 }
