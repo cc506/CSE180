@@ -42,7 +42,6 @@ wget http://robosrv.ucmerced.edu/husky.tgz
 tar zxvf husky.tgz
 cd ~/CSE180
 catkin_make
-
 ```
 For both distributions, launch Husky Gazebo the same way:
 ```
