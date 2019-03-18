@@ -16,7 +16,8 @@ using namespace std;
      int change = 0;
 
      double position[] = {1,2,5,6,0,7};
-     int npositions = 3; 
+     int npositions = 3;
+      
 void returnChange(const std_msgs::UInt32::ConstPtr &msg){
      change = msg->data;
 }
