@@ -19,7 +19,7 @@ The labs require Gazebo simulation, which is built into ROS. Launch it by follow
 ```
 roslaunch p2os_urdf pioneer3dx.gazebo.launch
 ```
-**Husky (Lab 4 and On)<br/>**
+**Husky (Lab 4 and 5)<br/>**
 
 First install Husky:<br/>
 * Kinetic:
@@ -46,6 +46,12 @@ catkin_make
 For both distributions, launch Husky Gazebo the same way:
 ```
 roslaunch husky_gazebo husky_playpen.launch
+```
+
+**Husky with Launch File (Lab 6)**
+
+```
+roslaunch assignments husky_navigate.launch
 ```
 
 ## Testing
