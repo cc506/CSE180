@@ -52,6 +52,8 @@
   <build_depend>roscpp</build_depend>
   <depend>ros_msgs</depend>
   <depend>tf2</depend>
+  <depend>tf2_ros</depend>
+  <depend>actionlib</depend>
   <build_export_depend>roscpp</build_export_depend>
   <exec_depend>roscpp</exec_depend>
 
