@@ -6,7 +6,7 @@
 # include <move_base_msgs/MoveBaseAction.h>
 # include <actionlib/client/simple_action_client.h>
 
-typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseClient;
+//typedef actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> MoveBaseClient;
 
 using namespace std;
 
@@ -27,11 +27,11 @@ void goToGoal(double goalx, double goaly, ros::Publisher pub){
     cout << goaly << endl;
 }
 
-void amcl_location(const geometry_msgs::PoseWithCovarianceStamped::ConstPtr &msg) 
-{	
-    x = msg->pose.pose.position.x;
-    y = msg->pose.pose.position.y;
-}
+// void amcl_location(const geometry_msgs::PoseWithCovarianceStamped::ConstPtr &msg) 
+// {	
+//     x = msg->pose.pose.position.x;
+//     y = msg->pose.pose.position.y;
+// }
 
 int main(int argc, char *argv[])
 {
@@ -39,9 +39,44 @@ int main(int argc, char *argv[])
     ros::NodeHandle nh;
     ros::Rate rate(1);
 
-    ros::Subscriber subPos = nh.subscribe("/amcl_pose", 1000, &amcl_location);
+    //MoveBaseClient ac("move_base", true);
 
-    MoveBaseClient ac("move_base", true);
+    //move_base_msgs::MoveBaseGoal goal;
+
+    ros::Publisher pub = nh.advertise<geometry_msgs::PoseStamped>("/move_base_simple/goal", 1000);
+    //ros::Subscriber subPos = nh.subscribe("/amcl_pose", 1000, &amcl_location);
+
+    ros::Duration(3).sleep();
+    goToGoal(2.0,4.0, pub);
+    ros::Duration(15).sleep();
+    goToGoal(4.0,0.0, pub);
+    ros::Duration(60).sleep();
+    goToGoal(9.0,0.0, pub);
+    ros::Duration(30).sleep();
+    goToGoal(9.0,1.0, pub);
+    ros::Duration(10).sleep();
+    goToGoal(4.0,1.0, pub);
+    ros::Duration(30).sleep();
+    goToGoal(4.0,2.0, pub);
+    ros::Duration(10).sleep();
+    goToGoal(9.0,2.0, pub);
+    ros::Duration(30).sleep();
+    goToGoal(9.0,3.0, pub);
+    ros::Duration(10).sleep();
+    goToGoal(4.0,3.0, pub);
+    ros::Duration(30).sleep();
+    goToGoal(4.0,4.0, pub);
+    ros::Duration(10).sleep();
+    goToGoal(9.0,4.0, pub);
+    ros::Duration(30).sleep();
+    goToGoal(9.0,5.0, pub);
+    ros::Duration(10).sleep();
+    goToGoal(4.0,5.0, pub);
+    ros::Duration(30).sleep();
+    goToGoal(4.0,6.0, pub);
+    ros::Duration(30).sleep();
+    goToGoal(9.0,6.0, pub);
 
 
+    ros::spin();
 }

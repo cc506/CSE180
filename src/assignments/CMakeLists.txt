@@ -4,8 +4,8 @@ project(assignments)
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
 
-set(CMAKE_CXX_COMPILER "clang++")
-set(CMAKE_C_COMPILER "clang")
+#set(CMAKE_CXX_COMPILER "clang++")
+#set(CMAKE_C_COMPILER "clang")
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -215,6 +215,7 @@ add_executable(goto src/goto.cpp)
 add_executable(tour src/tour.cpp)
 add_executable(gotopoint src/gotopoint.cpp)
 add_executable(navigate src/navigate.cpp)
+add_executable(cleanarea src/cleanarea.cpp)
 
 
 target_link_libraries(moverobot ${catkin_LIBRARIES})
@@ -225,3 +226,4 @@ target_link_libraries(goto ${catkin_LIBRARIES})
 target_link_libraries(tour ${catkin_LIBRARIES})
 target_link_libraries(gotopoint ${catkin_LIBRARIES})
 target_link_libraries(navigate ${catkin_LIBRARIES})
+target_link_libraries(cleanarea ${catkin_LIBRARIES})

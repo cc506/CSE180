@@ -48,7 +48,7 @@ For both distributions, launch Husky Gazebo the same way:
 roslaunch husky_gazebo husky_playpen.launch
 ```
 
-**Husky with Launch File (Lab 6)**
+**Husky with Launch File (Lab 6 and On)**
 
 ```
 roslaunch assignments husky_navigate.launch
