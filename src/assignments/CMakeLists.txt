@@ -216,7 +216,7 @@ add_executable(tour src/tour.cpp)
 add_executable(gotopoint src/gotopoint.cpp)
 add_executable(navigate src/navigate.cpp)
 add_executable(cleanarea src/cleanarea.cpp)
-
+add_executable(averagepose src/averagepose.cpp)
 
 target_link_libraries(moverobot ${catkin_LIBRARIES})
 target_link_libraries(drift ${catkin_LIBRARIES})
@@ -227,3 +227,4 @@ target_link_libraries(tour ${catkin_LIBRARIES})
 target_link_libraries(gotopoint ${catkin_LIBRARIES})
 target_link_libraries(navigate ${catkin_LIBRARIES})
 target_link_libraries(cleanarea ${catkin_LIBRARIES})
+target_link_libraries(averagepose ${catkin_LIBRARIES})
